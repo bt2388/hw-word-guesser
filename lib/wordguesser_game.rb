@@ -46,9 +46,11 @@ class WordGuesserGame
   def self.get_random_word
     require 'uri'
     require 'net/http'
-    uri = URI('http://esaas-randomword-27a759b6224d.herokuapp.com/RandomWord')
-    Net::HTTP.new('esaas-randomword-27a759b6224d.herokuapp.com').start do |http|
-      return http.post(uri, "").body
+    uri = URI('https://esaas-randomword-27a759b6224d.herokuapp.com/RandomWord')
+    http = Net::HTTP.new(uri.host, uri.port)
+    http.use_ssl = true
+    http.start do |conn|
+      return conn.post(uri, "").body
     end
   end
 
